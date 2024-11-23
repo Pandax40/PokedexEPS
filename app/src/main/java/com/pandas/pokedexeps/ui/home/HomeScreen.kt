@@ -6,18 +6,33 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.pandas.pokedexeps.R
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    navController: NavController
+) {
     PokedexEPSTheme {
+        val navigateToCaptureZoneScreen by viewModel.navigateToCaptureZoneScreen
+
+        LaunchedEffect(navigateToCaptureZoneScreen) {
+            if (navigateToCaptureZoneScreen) {
+                navController.navigate("capture_zone_screen")
+                viewModel.onNavigatedToCaptureZoneScreen()
+            }
+        }
+
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -60,7 +75,7 @@ fun HomeScreen(modifier: Modifier = Modifier, viewModel: HomeViewModel = android
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = { /* Navigate to Capture Pokemon */ },
+                onClick = { viewModel.onCaptureZoneButtonClicked() },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Capturar Zona")
@@ -72,5 +87,5 @@ fun HomeScreen(modifier: Modifier = Modifier, viewModel: HomeViewModel = android
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(navController = rememberNavController())
 }
