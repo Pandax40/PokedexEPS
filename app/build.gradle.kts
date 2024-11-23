@@ -11,7 +11,8 @@ android {
     defaultConfig {
         applicationId = "com.pandas.pokedexeps"
         minSdk = 23
-        targetSdk = 34
+        //noinspection EditedTargetSdkVersion
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -52,8 +53,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.zxing.android.embedded)
-    implementation(libs.material)
+    //implementation(libs.zxing.android.embedded)
+    //implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
