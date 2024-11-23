@@ -26,7 +26,8 @@ class TeamServiceAdapter : ITeamService {
     }
 
     override suspend fun getTeamById(teamId: String): Team = withContext(Dispatchers.IO) {
-        val teamDTO = api.getTeamById(teamId)
+        val hardcodedTeamId = "c588d253-e2b5-4e25-9b0c-1252f747e451"
+        val teamDTO = api.getTeamById(hardcodedTeamId)
         mapTeamDTOToModel(teamDTO)
     }
 
