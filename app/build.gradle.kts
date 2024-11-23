@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     //implementation(libs.zxing.android.embedded)
     //implementation(libs.material)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
