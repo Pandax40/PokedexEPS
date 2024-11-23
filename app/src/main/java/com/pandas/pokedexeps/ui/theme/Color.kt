@@ -2,10 +2,15 @@ package com.pandas.pokedexeps.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// Colores principales
+val PokemonRed = Color(0xFFFF0000)
+val PokemonYellow = Color(0xFFFFCC00)
+val PokemonBlue = Color(0xFF3B4CCA)
+val PokemonWhite = Color(0xFFFFFFFF)
+val PokemonBlack = Color(0xFF212121)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+// Fondo y colores secundarios
+val BackgroundColor = Color(0xFFF0F4C3) // Verde claro pastel
+val ButtonColor = Color(0xFFFFC107) // Amarillo intenso
+val TextPrimaryColor = Color(0xFF212121) // Gris oscuro
+val TextSecondaryColor = Color(0xFF757575) // Gris claro
