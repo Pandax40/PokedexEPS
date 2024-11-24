@@ -1,6 +1,7 @@
 package com.pandas.pokedexeps.ui.teamgeneration
 
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,13 +16,17 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.pandas.pokedexeps.ui.components.PokemonCard
+import com.pandas.pokedexeps.ui.navigation.Home
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
 
 @Composable
-fun TeamGenerationScreen(viewModel: TeamGenerationViewModel = androidx.lifecycle.viewmodel.compose.viewModel(), navController: NavController) {
+fun TeamGenerationScreen(navController: NavController) {
+    val viewModel: TeamGenerationViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
     val teamList by viewModel.teamList
     val isLoading by viewModel.isLoading
-
+    BackHandler {
+        navController.navigate(Home)
+    }
     PokedexEPSTheme {
         Column(
             modifier = Modifier

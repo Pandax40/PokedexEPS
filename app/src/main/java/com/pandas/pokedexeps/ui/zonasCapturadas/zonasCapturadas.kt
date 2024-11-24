@@ -36,7 +36,7 @@ fun ZonasCapturadasScreen(
 
     // Obtenemos el estado del switch desde el ViewModel
     val isAutomatizarOn by viewModel.isAutomatizarOn // Observamos el estado del switch
-
+    val showCooldownPopup by viewModel.showCooldownPopup
     BackHandler {
         navController.navigate(Home)
     }

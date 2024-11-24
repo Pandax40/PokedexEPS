@@ -26,6 +26,7 @@ import com.pandas.pokedexeps.ui.navigation.Home
 import com.pandas.pokedexeps.ui.navigation.Pokedex
 import com.pandas.pokedexeps.ui.navigation.PokedexDetail
 import com.pandas.pokedexeps.ui.navigation.Team
+import com.pandas.pokedexeps.ui.navigation.TeamGeneration
 import com.pandas.pokedexeps.ui.navigation.ZonasCapturadas
 
 class MainActivity : ComponentActivity() {
@@ -66,7 +67,7 @@ fun NavGraph(navController: androidx.navigation.NavHostController, modifier: Mod
         composable<ZonasCapturadas> {
             ZonasCapturadasScreen(navController = navController)
         }
-        composable("team_generation"){
+        composable<TeamGeneration> {
             TeamGenerationScreen(navController = navController)
         }
     }

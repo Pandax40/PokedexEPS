@@ -19,3 +19,6 @@ object Team
 
 @Serializable
 object ZonasCapturadas
+
+@Serializable
+object TeamGeneration

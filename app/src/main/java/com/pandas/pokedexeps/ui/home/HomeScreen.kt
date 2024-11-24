@@ -22,6 +22,7 @@ import com.pandas.pokedexeps.R
 import com.pandas.pokedexeps.ui.navigation.CaptureZone
 import com.pandas.pokedexeps.ui.navigation.Pokedex
 import com.pandas.pokedexeps.ui.navigation.Team
+import com.pandas.pokedexeps.ui.navigation.TeamGeneration
 import com.pandas.pokedexeps.ui.navigation.ZonasCapturadas
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
 import kotlinx.coroutines.delay
@@ -72,7 +73,7 @@ fun HomeScreen(
 
         LaunchedEffect(navigateToTeamGeneration) {
             if (navigateToTeamGeneration) {
-                navController.navigate("team_generation")
+                navController.navigate(TeamGeneration)
                 viewModel.onNavigatedToTeamGeneration()
             }
         }
