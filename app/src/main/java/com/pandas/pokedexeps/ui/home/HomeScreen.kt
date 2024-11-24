@@ -27,6 +27,7 @@ fun HomeScreen(
         val navigateToCaptureZoneScreen by viewModel.navigateToCaptureZoneScreen
         val navigateToPokedexScreen by viewModel.navigateToPokedexScreen
         val navigateToTeamScreen by viewModel.navigateToTeamScreen
+        val navigateToCapturedZones by viewModel.navigateToCapturedZones
 
         LaunchedEffect(navigateToCaptureZoneScreen) {
             if (navigateToCaptureZoneScreen) {
@@ -46,6 +47,13 @@ fun HomeScreen(
             if (navigateToTeamScreen) {
                 navController.navigate("team_screen")
                 viewModel.onNavigatedToTeamScreen()
+            }
+        }
+
+        LaunchedEffect(navigateToCapturedZones) {
+            if (navigateToCapturedZones) {
+                navController.navigate("zona_capturada_screen")
+                viewModel.onNavigatedToCapturedZones()
             }
         }
 
@@ -88,6 +96,13 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Capture Zone")
+            }
+            Spacer(modifier = Modifier.height(24.dp))
+            Button(
+                onClick = { viewModel.onCapturedZonesButtonClicked() },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Captured Zones")
             }
         }
     }

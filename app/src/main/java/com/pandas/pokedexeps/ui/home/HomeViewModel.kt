@@ -17,6 +17,9 @@ class HomeViewModel : ViewModel() {
     var navitateToPokemonDetail: MutableState<Boolean> = mutableStateOf(false)
         private set
 
+    var navigateToCapturedZones: MutableState<Boolean> = mutableStateOf(false)
+        private set
+
     fun onCaptureZoneButtonClicked() {
         navigateToCaptureZoneScreen.value = true
     }
@@ -47,5 +50,13 @@ class HomeViewModel : ViewModel() {
 
     fun onPokemonDetailButtonClicked() {
         navitateToPokemonDetail.value = true
+    }
+
+    fun onCapturedZonesButtonClicked() {
+        navigateToCapturedZones.value = true
+    }
+
+    fun onNavigatedToCapturedZones() {
+        navigateToTeamScreen.value = false
     }
 }

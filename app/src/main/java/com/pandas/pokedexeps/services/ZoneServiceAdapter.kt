@@ -1,5 +1,6 @@
 package com.pandas.pokedexeps.services
 
+import com.pandas.pokedexeps.models.LastRequestByTeam
 import com.pandas.pokedexeps.models.PokemonProbability
 import com.pandas.pokedexeps.models.Zone
 import com.pandas.pokedexeps.models.ZoneDTO
@@ -34,7 +35,12 @@ class ZoneServiceAdapter : IZoneService {
             id = dto._id,
             name = dto.name,
             cooldownPeriod = dto.cooldown_period,
-            lastRequestsByTeam = dto.last_requests_by_team,
+            lastRequestsByTeam = dto.last_requests_by_team.map{
+                LastRequestByTeam(
+                    name = it.name,
+                    timestamp = it.timestamp
+                )
+            },
             pokemonProbabilities = dto.pokemon_prob_list.map {
                 PokemonProbability(
                     pokemonId = it.pokemon_id,

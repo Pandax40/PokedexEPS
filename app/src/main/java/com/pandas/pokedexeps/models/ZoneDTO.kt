@@ -4,7 +4,7 @@ data class ZoneDTO(
     val _id: String,
     val name: String,
     val cooldown_period: Int,
-    val last_requests_by_team: List<String>,
+    val last_requests_by_team: List<LastRequestByTeamDTO>,
     val pokemon_prob_list: List<PokemonProbDTO>
 )
 

@@ -20,6 +20,7 @@ import com.pandas.pokedexeps.ui.pokedex.PokedexScreen
 import com.pandas.pokedexeps.ui.pokedex.detail.PokemonDetailScreen
 import com.pandas.pokedexeps.ui.team.TeamScreen
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
+import com.pandas.pokedexeps.ui.zonasCapturadas.ZonasCapturadasScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +56,10 @@ fun NavGraph(navController: androidx.navigation.NavHostController, modifier: Mod
         }
         composable("team_screen") {
             TeamScreen(navController = navController)
+        }
+
+        composable("zona_capturada_screen") {
+            ZonasCapturadasScreen(navController = navController)
         }
     }
 }

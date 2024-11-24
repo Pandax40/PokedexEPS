@@ -5,7 +5,7 @@ data class Zone(
     val id: String,
     val name: String,
     val cooldownPeriod: Int,
-    val lastRequestsByTeam: List<String>,
+    val lastRequestsByTeam: List<LastRequestByTeam>,
     val pokemonProbabilities: List<PokemonProbability>
 )
 

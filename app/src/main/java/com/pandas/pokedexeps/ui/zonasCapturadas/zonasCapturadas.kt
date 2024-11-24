@@ -19,14 +19,17 @@ import androidx.compose.ui.unit.dp
 import com.pandas.pokedexeps.R
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun ZonasCapturadasScreen(
     modifier: Modifier = Modifier,
-    viewModel: zonasCapturadasViewModel = viewModel() // Obtenemos el ViewModel
+    viewModel: ZonasCapturadasViewModel = viewModel(), // Obtenemos el ViewModel
+    navController: NavHostController
 ) {
     // Obtenemos la lista de zonas visitadas desde el ViewModel
-    val zonasVisitadas by viewModel.zonasVisitadas // Observamos las zonas visitadas
+    val zonasCapturadas by viewModel.zonasCapturadasMap // Observamos las zonas visitadas
 
     // Obtenemos el estado del switch desde el ViewModel
     val isAutomatizarOn by viewModel.isAutomatizarOn // Observamos el estado del switch
@@ -84,7 +87,7 @@ fun ZonasCapturadasScreen(
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(zonasVisitadas) { zona ->
+                items(zonasCapturadas.values.toList()) { zonaKey ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -93,7 +96,7 @@ fun ZonasCapturadasScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Zona $zona",
+                            text = "Zona $zonaKey",
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onBackground
                         )
@@ -114,5 +117,5 @@ fun ZonasCapturadasScreen(
 @Preview(showBackground = true)
 @Composable
 fun ZonasCapturadasPreview() {
-    ZonasCapturadasScreen()
+    ZonasCapturadasScreen(navController = rememberNavController())
 }
