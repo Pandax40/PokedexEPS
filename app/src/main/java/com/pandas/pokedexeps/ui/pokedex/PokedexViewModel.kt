@@ -11,7 +11,6 @@ import com.pandas.pokedexeps.models.Pokemon
 import com.pandas.pokedexeps.adapter.AdapterFactory
 
 class PokedexViewModel : ViewModel() {
-
     private val _pokemonList = mutableStateOf<List<Pokemon>>(emptyList())
     private val _pokemonOwnList = mutableStateOf<List<String>>(emptyList())
     val pokemonList: State<List<Pokemon>> = _pokemonList

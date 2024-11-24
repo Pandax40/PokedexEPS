@@ -18,6 +18,7 @@ import com.pandas.pokedexeps.ui.components.PokemonCard
 import com.pandas.pokedexeps.ui.components.PokemonCardPreview
 import com.pandas.pokedexeps.ui.pokedex.PokedexScreen
 import com.pandas.pokedexeps.ui.pokedex.detail.PokemonDetailScreen
+import com.pandas.pokedexeps.ui.team.TeamScreen
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
 
 class MainActivity : ComponentActivity() {
@@ -52,8 +53,8 @@ fun NavGraph(navController: androidx.navigation.NavHostController, modifier: Mod
             val pokemonId = blackStackEntry.arguments?.getString("pokemonId")?.toInt()
             PokemonDetailScreen(pokemonId = pokemonId, navController = navController)
         }
-        /*composable("team_screen") {
+        composable("team_screen") {
             TeamScreen(navController = navController)
-        }*/
+        }
     }
 }
