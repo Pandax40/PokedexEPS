@@ -1,8 +1,8 @@
 package com.pandas.pokedexeps.ui.capturezone
 
-import android.app.Activity
 import android.content.pm.PackageManager
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -34,6 +34,7 @@ import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.CompoundBarcodeView
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import com.pandas.pokedexeps.R
+import com.pandas.pokedexeps.ui.navigation.Home
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
 
 @Composable
@@ -41,6 +42,7 @@ fun CaptureZoneScreen(
     navController: NavController
 ) {
     val viewModel: CaptureZoneViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    BackHandler { navController.navigate(Home) }
     PokedexEPSTheme {
         val qrCode by viewModel.qrCode
         val areButtonsVisible by viewModel.areButtonsVisible
@@ -48,7 +50,6 @@ fun CaptureZoneScreen(
         val showCooldownPopup by viewModel.showCooldownPopup
 
         val context = LocalContext.current
-        val activity = context as Activity
 
         var hasCameraPermission by remember { mutableStateOf(false) }
         val cameraPermissionLauncher = rememberLauncherForActivityResult(
