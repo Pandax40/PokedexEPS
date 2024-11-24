@@ -11,10 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.pandas.pokedexeps.ui.pokedex.PokedexViewModel
 
 @Composable
-fun TeamScreen(viewModel: TeamViewModel = androidx.lifecycle.viewmodel.compose.viewModel(), navController: NavController) {
+fun TeamScreen(navController: NavController) {
+    val viewModel: TeamViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
     val team = viewModel.team.value
     val isLoading = viewModel.isLoading.value
 

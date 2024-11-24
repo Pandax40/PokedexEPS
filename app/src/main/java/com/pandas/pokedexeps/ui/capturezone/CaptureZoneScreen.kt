@@ -38,10 +38,9 @@ import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
 
 @Composable
 fun CaptureZoneScreen(
-    modifier: Modifier = Modifier,
-    viewModel: CaptureZoneViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
     navController: NavController
 ) {
+    val viewModel: CaptureZoneViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
     PokedexEPSTheme {
         val qrCode by viewModel.qrCode
         val areButtonsVisible by viewModel.areButtonsVisible
@@ -77,7 +76,7 @@ fun CaptureZoneScreen(
         }
 
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp),

@@ -12,15 +12,20 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.pandas.pokedexeps.ui.navigation.CaptureZone
 import com.pandas.pokedexeps.ui.home.HomeScreen
 import com.pandas.pokedexeps.ui.capturezone.CaptureZoneScreen
-import com.pandas.pokedexeps.ui.components.PokemonCard
-import com.pandas.pokedexeps.ui.components.PokemonCardPreview
 import com.pandas.pokedexeps.ui.pokedex.PokedexScreen
 import com.pandas.pokedexeps.ui.pokedex.detail.PokemonDetailScreen
 import com.pandas.pokedexeps.ui.team.TeamScreen
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
 import com.pandas.pokedexeps.ui.zonasCapturadas.ZonasCapturadasScreen
+import com.pandas.pokedexeps.ui.navigation.Home
+import com.pandas.pokedexeps.ui.navigation.Pokedex
+import com.pandas.pokedexeps.ui.navigation.PokedexDetail
+import com.pandas.pokedexeps.ui.navigation.Team
+import com.pandas.pokedexeps.ui.navigation.ZonasCapturadas
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +37,6 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     NavGraph(navController = navController, modifier = Modifier.padding(innerPadding))
                 }
-                //PokemonCard(id = 1, name = "Bulbasaur", imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png")
             }
         }
     }
@@ -40,25 +44,25 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun NavGraph(navController: androidx.navigation.NavHostController, modifier: Modifier = Modifier) {
-    NavHost(navController = navController, startDestination = "home_screen", modifier = modifier) {
-        composable("home_screen") {
+    NavHost(navController = navController, startDestination = Home, modifier = modifier) {
+        composable<Home>{
             HomeScreen(navController = navController)
         }
-        composable("pokedex_screen") {
+        composable<Pokedex>{
             PokedexScreen(navController = navController)
         }
-        composable("capture_zone_screen") {
+        composable<CaptureZone> {
             CaptureZoneScreen(navController = navController)
         }
-        composable("pokemon_detail_screen/{pokemonId}") {blackStackEntry ->
-            val pokemonId = blackStackEntry.arguments?.getString("pokemonId")?.toInt()
+        composable<PokedexDetail>   { blackStackEntry ->
+            val pokemonId = blackStackEntry.toRoute<PokedexDetail>().pokemonId
             PokemonDetailScreen(pokemonId = pokemonId, navController = navController)
         }
-        composable("team_screen") {
+        composable<Team> {
             TeamScreen(navController = navController)
         }
 
-        composable("zona_capturada_screen") {
+        composable<ZonasCapturadas> {
             ZonasCapturadasScreen(navController = navController)
         }
     }

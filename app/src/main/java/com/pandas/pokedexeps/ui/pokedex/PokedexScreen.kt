@@ -1,6 +1,7 @@
     package com.pandas.pokedexeps.ui.pokedex
 
     import android.widget.Button
+    import androidx.activity.compose.BackHandler
     import androidx.compose.foundation.layout.*
     import androidx.compose.foundation.layout.Arrangement
     import androidx.compose.foundation.lazy.LazyColumn
@@ -18,16 +19,20 @@
     import com.pandas.pokedexeps.ui.components.PokemonCard
     import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
     import androidx.compose.material3.Button
+    import com.pandas.pokedexeps.ui.navigation.Home
+    import com.pandas.pokedexeps.ui.navigation.PokedexDetail
 
     @Composable
     fun PokedexScreen(
-        viewModel: PokedexViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
         navController: NavController
     ) {
+        val viewModel: PokedexViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
         val pokemonList by viewModel.pokemonList
         val pokemonOwnList by viewModel.pokemonOwnList
         val isLoading by viewModel.isLoading
         val sortingOption by viewModel.sortingOption
+
+        BackHandler { navController.navigate(Home) }
 
         PokedexEPSTheme {
             Column(
@@ -78,7 +83,7 @@
                                         name = pokemon.name,
                                         imageUrl = pokemon.imageUrl,
                                         onClick = {
-                                            navController.navigate("pokemon_detail_screen/${pokemon.id}")
+                                            navController.navigate(PokedexDetail(pokemon.id))
                                         },
                                         had = had,
                                         modifier = Modifier.width(170.dp)

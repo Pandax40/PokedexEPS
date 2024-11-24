@@ -1,5 +1,6 @@
 package com.pandas.pokedexeps.ui.home
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -18,15 +19,19 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.pandas.pokedexeps.R
+import com.pandas.pokedexeps.ui.navigation.CaptureZone
+import com.pandas.pokedexeps.ui.navigation.Pokedex
+import com.pandas.pokedexeps.ui.navigation.Team
+import com.pandas.pokedexeps.ui.navigation.ZonasCapturadas
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
 import kotlinx.coroutines.delay
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
     navController: NavController
 ) {
+    val viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    BackHandler {  navController.popBackStack(navController.graph.startDestinationId, inclusive = false) }
     PokedexEPSTheme {
         val navigateToCaptureZoneScreen by viewModel.navigateToCaptureZoneScreen
         val navigateToPokedexScreen by viewModel.navigateToPokedexScreen
@@ -36,30 +41,30 @@ fun HomeScreen(
         // Define un Animatable para el ángulo de rotación
         val rotationAngle = remember { Animatable(0f) }
 
-        LaunchedEffect(navigateToCaptureZoneScreen) {
-            if (navigateToCaptureZoneScreen) {
-                navController.navigate("capture_zone_screen")
-                viewModel.onNavigatedToCaptureZoneScreen()
+        LaunchedEffect(navigateToPokedexScreen) {
+            if (navigateToPokedexScreen) {
+                navController.navigate(Pokedex)
+                viewModel.onNavigatedToPokedexScreen()
             }
         }
 
-        LaunchedEffect(navigateToPokedexScreen) {
-            if (navigateToPokedexScreen) {
-                navController.navigate("pokedex_screen")
-                viewModel.onNavigatedToPokedexScreen()
+        LaunchedEffect(navigateToCaptureZoneScreen) {
+            if (navigateToCaptureZoneScreen) {
+                navController.navigate(CaptureZone)
+                viewModel.onNavigatedToCaptureZoneScreen()
             }
         }
 
         LaunchedEffect(navigateToTeamScreen) {
             if (navigateToTeamScreen) {
-                navController.navigate("team_screen")
+                navController.navigate(Team)
                 viewModel.onNavigatedToTeamScreen()
             }
         }
 
         LaunchedEffect(navigateToCapturedZones) {
             if (navigateToCapturedZones) {
-                navController.navigate("zona_capturada_screen")
+                navController.navigate(ZonasCapturadas)
                 viewModel.onNavigatedToCapturedZones()
             }
         }
@@ -74,7 +79,7 @@ fun HomeScreen(
         }
 
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp),

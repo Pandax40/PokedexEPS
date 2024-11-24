@@ -1,5 +1,6 @@
 package com.pandas.pokedexeps.ui.zonasCapturadas
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -21,22 +22,26 @@ import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.pandas.pokedexeps.ui.navigation.Home
 
 @Composable
 fun ZonasCapturadasScreen(
-    modifier: Modifier = Modifier,
-    viewModel: ZonasCapturadasViewModel = viewModel(), // Obtenemos el ViewModel
     navController: NavHostController
 ) {
+    val viewModel: ZonasCapturadasViewModel = viewModel()
     // Obtenemos la lista de zonas visitadas desde el ViewModel
     val zonasCapturadas by viewModel.zonasCapturadasMap // Observamos las zonas visitadas
 
     // Obtenemos el estado del switch desde el ViewModel
     val isAutomatizarOn by viewModel.isAutomatizarOn // Observamos el estado del switch
 
+    BackHandler {
+        navController.navigate(Home)
+    }
+
     PokedexEPSTheme {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp),
