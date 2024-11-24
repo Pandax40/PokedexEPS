@@ -1,73 +1,89 @@
-package com.pandas.pokedexeps.ui.pokedex
+    package com.pandas.pokedexeps.ui.pokedex
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.pandas.pokedexeps.ui.theme.PokemonTypography
-import com.pandas.pokedexeps.ui.components.PokemonCard
-import com.pandas.pokedexeps.ui.home.HomeViewModel
-import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
-import kotlin.text.contains
-import kotlin.toString
+    import android.widget.Button
+    import androidx.compose.foundation.layout.*
+    import androidx.compose.foundation.layout.Arrangement
+    import androidx.compose.foundation.lazy.LazyColumn
+    import androidx.compose.foundation.lazy.itemsIndexed
+    import androidx.compose.material3.MaterialTheme
+    import androidx.compose.material3.Text
+    import androidx.compose.runtime.Composable
+    import androidx.compose.runtime.getValue
+    import androidx.compose.ui.Modifier
+    import androidx.compose.ui.tooling.preview.Preview
+    import androidx.compose.ui.unit.dp
+    import androidx.navigation.NavController
+    import androidx.navigation.compose.rememberNavController
+    import com.pandas.pokedexeps.ui.theme.PokemonTypography
+    import com.pandas.pokedexeps.ui.components.PokemonCard
+    import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
+    import androidx.compose.material3.Button
 
-@Composable
-fun PokedexScreen(viewModel: PokedexViewModel = androidx.lifecycle.viewmodel.compose.viewModel(), navController: NavController) {
-    val pokemonList by viewModel.pokemonList
-    val pokemonOwnList by viewModel.pokemonOwnList
-    val isLoading by viewModel.isLoading
+    @Composable
+    fun PokedexScreen(
+        viewModel: PokedexViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+        navController: NavController
+    ) {
+        val pokemonList by viewModel.pokemonList
+        val pokemonOwnList by viewModel.pokemonOwnList
+        val isLoading by viewModel.isLoading
+        val sortingOption by viewModel.sortingOption
 
-    PokedexEPSTheme {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-                .padding(top = 32.dp, bottom = 32.dp),
-        ) {
-            Text(
-                text = "Pokedex",
-                style = PokemonTypography.bodyLarge,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-            if (isLoading) {
-                Text(text = "Loading...", style = MaterialTheme.typography.bodyLarge)
-            } else {
-                LazyColumn {
-                    itemsIndexed(pokemonList.chunked(2)) { _, rowPokemons ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Absolute.Left,
+        PokedexEPSTheme {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .padding(top = 32.dp, bottom = 32.dp),
+            ) {
+                Text(
+                    text = "Pokedex",
+                    style = PokemonTypography.bodyLarge,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
 
+                // Botón único para cambiar las opciones de ordenamiento
+                Button(
+                    onClick = {
+                        val newOption = if (sortingOption == SortingOption.BY_NAME) {
+                            SortingOption.BY_ID
+                        } else {
+                            SortingOption.BY_NAME
+                        }
+                        viewModel.setSortingOption(newOption)
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Orden: " + if (sortingOption == SortingOption.BY_NAME) "Nombre" else "ID"
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                if (isLoading) {
+                    Text(text = "Loading...", style = MaterialTheme.typography.bodyLarge)
+                } else {
+                    LazyColumn {
+                        itemsIndexed(pokemonList.chunked(2)) { _, rowPokemons ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Start,
                             ) {
-                            rowPokemons.forEach { pokemon -> val backgroundColor = if (pokemonOwnList.contains(pokemon.id.toString())) {
-                                    MaterialTheme.colorScheme.primary
-                                } else {
-                                    MaterialTheme.colorScheme.surface
+                                rowPokemons.forEach { pokemon ->
+                                    val had = pokemonOwnList.contains(pokemon.id.toString())
+
+                                    PokemonCard(
+                                        id = pokemon.id,
+                                        name = pokemon.name,
+                                        imageUrl = pokemon.imageUrl,
+                                        onClick = {
+                                            navController.navigate("pokemon_detail_screen/${pokemon.id}")
+                                        },
+                                        had = had,
+                                        modifier = Modifier.width(170.dp)
+                                    )
                                 }
-
-                                PokemonCard(
-                                    id = pokemon.id,
-                                    name = pokemon.name,
-                                    imageUrl = pokemon.imageUrl,
-                                    onClick = {
-                                        navController.navigate("pokemon_detail_screen/${pokemon.id}")
-                                    },
-
-                                    modifier = Modifier.width(170.dp)
-                                )
                             }
                         }
                     }
@@ -75,9 +91,10 @@ fun PokedexScreen(viewModel: PokedexViewModel = androidx.lifecycle.viewmodel.com
             }
         }
     }
-}
-@Preview
-@Composable
-fun PokedexScreenPreview() {
-    PokedexScreen(navController = rememberNavController())
-}
+
+
+    @Preview
+    @Composable
+    fun PokedexScreenPreview() {
+        PokedexScreen(navController = rememberNavController())
+    }

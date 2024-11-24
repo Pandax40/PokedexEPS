@@ -89,8 +89,6 @@ fun PokemonDetailContent(pokemon: Pokemon) {
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = "Weight: ${pokemon.weight}", style = MaterialTheme.typography.bodyMedium)
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "Cries: ${pokemon.cries}", style = MaterialTheme.typography.bodyMedium)
-        Spacer(modifier = Modifier.height(8.dp))
         Text(text = "Abilities:", style = MaterialTheme.typography.headlineSmall)
         pokemon.abilities.forEach { ability ->
             Text(text = "${ability.name} (Hidden: ${ability.isHidden}, Slot: ${ability.slot})", style = MaterialTheme.typography.bodyMedium)
@@ -109,11 +107,6 @@ fun PokemonDetailContent(pokemon: Pokemon) {
         Text(text = "Moves:", style = MaterialTheme.typography.headlineSmall)
         pokemon.moves.forEach { move ->
             Text(text = move.name, style = MaterialTheme.typography.bodyMedium)
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = "Locations:", style = MaterialTheme.typography.headlineSmall)
-        pokemon.locations.forEach { location ->
-            Text(text = location, style = MaterialTheme.typography.bodyMedium)
         }
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = "Species: ${pokemon.species.name}", style = MaterialTheme.typography.bodyMedium)

@@ -17,6 +17,10 @@ class CaptureZoneViewModel : ViewModel() {
     var navigateBackToHomeScreen: MutableState<Boolean> = mutableStateOf(false)
         private set
 
+    // Nueva propiedad para controlar la visualización del pop-up
+    var showCooldownPopup: MutableState<Boolean> = mutableStateOf(false)
+        private set
+
     fun onQrCodeScanned(scannedQrCode: String) {
         qrCode.value = scannedQrCode
         areButtonsVisible.value = true
@@ -28,31 +32,32 @@ class CaptureZoneViewModel : ViewModel() {
 
     fun capturePokemon() {
         // Logic to capture Pokémon using the scanned QR code
-        val zone = qrCode.value.takeLast(24)
-
+        val zone: String = qrCode.value.toString().takeLast(24)
         capturePokemon(zone)
     }
 
     private fun capturePokemon(zone: String) {
         viewModelScope.launch {
-            // Logic to capture Pokémon using the scanned QR code
-
             val teamService = AdapterFactory.createTeamServiceAdapter()
-
-            val zoneService = AdapterFactory.createZoneServiceAdapter();
+            val zoneService = AdapterFactory.createZoneServiceAdapter()
             val zoneO = zoneService.getZoneById(zone)
-            var encontrado = false;
-            zoneO.lastRequestsByTeam.forEach { teamId ->
-                val team = teamService.getTeam()
-                if (team.name == "PandaEnjoyer") {
+            var encontrado = false
+
+            // Obtenemos el equipo actual una vez
+            val team = teamService.getTeam()
+            zoneO.lastRequestsByTeam.forEach { teamName ->
+                if ( teamName.name == "PandaEnjoyers") {
                     encontrado = true
                 }
             }
 
-            if(!encontrado) {
-                // Realiza las acciones necesarias si ningun equipo es "PandaEnjoyer"
-                val eventServie = AdapterFactory.createEventServiceAdapter();
-                eventServie.generateEvent(zone)
+            if (!encontrado) {
+                // Acciones si no se ha encontrado el equipo en la lista (no hay cooldown)
+                val eventService = AdapterFactory.createEventServiceAdapter()
+                eventService.generateEvent(zone)
+            } else {
+                // Acciones si el equipo está en la lista (tiene cooldown)
+                showCooldownPopup.value = true // Activamos el pop-up
             }
         }
     }

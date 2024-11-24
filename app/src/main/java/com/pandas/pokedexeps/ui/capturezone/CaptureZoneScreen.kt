@@ -10,11 +10,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,9 +43,10 @@ fun CaptureZoneScreen(
     navController: NavController
 ) {
     PokedexEPSTheme {
-        val qrCode = viewModel.qrCode.value
-        val areButtonsVisible = viewModel.areButtonsVisible.value
-        val navigateBackToHomeScreen = viewModel.navigateBackToHomeScreen.value
+        val qrCode by viewModel.qrCode
+        val areButtonsVisible by viewModel.areButtonsVisible
+        val navigateBackToHomeScreen by viewModel.navigateBackToHomeScreen
+        val showCooldownPopup by viewModel.showCooldownPopup
 
         val context = LocalContext.current
         val activity = context as Activity
@@ -54,7 +57,7 @@ fun CaptureZoneScreen(
         ) { isGranted: Boolean ->
             hasCameraPermission = isGranted
             if (!isGranted) {
-                Toast.makeText(context, "Camera permission is required to scan QR codes", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Se requiere permiso de cámara para escanear códigos QR", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -79,22 +82,27 @@ fun CaptureZoneScreen(
                 .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
         ) {
             IconButton(onClick = { viewModel.onBackButtonClicked() }) {
-                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
+                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Atrás")
             }
             Spacer(modifier = Modifier.height(24.dp))
             Image(
                 painter = painterResource(id = R.drawable.pokemon_logo),
-                contentDescription = "Pokémon Logo",
+                contentDescription = "Logo de Pokémon",
                 modifier = Modifier.size(50.dp)
             )
             Spacer(modifier = Modifier.height(24.dp))
             if (hasCameraPermission) {
                 val barcodeView = remember { CompoundBarcodeView(context) }
+                DisposableEffect(Unit) {
+                    barcodeView.resume()
+                    onDispose {
+                        barcodeView.pause()
+                    }
+                }
+
                 barcodeView.barcodeView.decoderFactory = DefaultDecoderFactory(listOf(BarcodeFormat.QR_CODE))
-                barcodeView.initializeFromIntent(activity.intent)
                 barcodeView.decodeContinuous(object : BarcodeCallback {
                     override fun barcodeResult(result: BarcodeResult?) {
                         result?.let {
@@ -114,26 +122,39 @@ fun CaptureZoneScreen(
             }
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "Scanned QR Code: $qrCode",
+                text = if (qrCode.isNotEmpty()) "Código QR Encontrado" else "Escanea un código QR",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.height(24.dp))
             if (areButtonsVisible) {
                 Button(
-                    onClick = { viewModel.registerZone() },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(text = "Register Zone")
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                Button(
                     onClick = { viewModel.capturePokemon() },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = "Capture Pokémon")
+                    Text(text = "Capturar Pokémon")
                 }
             }
+        }
+        if (showCooldownPopup) {
+            AlertDialog(
+                onDismissRequest = {
+                    viewModel.showCooldownPopup.value = false
+                },
+                confirmButton = {
+                    TextButton(onClick = {
+                        viewModel.showCooldownPopup.value = false
+                    }) {
+                        Text("OK")
+                    }
+                },
+                title = {
+                    Text("Cooldown Activo")
+                },
+                text = {
+                    Text("No puedes cazar Pokémon en esa área porque tienes un cooldown.")
+                }
+            )
         }
     }
 }
