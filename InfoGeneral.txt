@@ -1,0 +1,32 @@
+pokemon
+Gyarados: 2a9bcb56-c0ab-43b8-827c-585d945ec1d0
+Alakazam: 0ef76c40-25a1-4876-87dd-12e542fd7f21
+Arcanine: 2b3296f8-0b6c-425d-86a4-157ec68eb03a
+Vileplume: 9d6d275f-489d-44c9-8900-bc8ded66b569
+Snorlax: bf2e2df8-fa95-443e-83d4-5cbc44851255
+CyberDuck: dfc66c99-b620-4f77-b4ee-f96c549f870e
+
+zonas = [
+    "67372c56ec018d7dedd34ee3",
+    "6737278e28aebf267e089bec",
+    "67372c39c499cd12be6bef9e",
+    "67372c61f269e28d2f86f063",
+    "6710c41ed814fc8dae914171",
+    "67372c23ea45b856683249f4",
+    "67372c1c7a5c6e90024299e1",
+    "67372c44db061db993104ce1",
+    "67372c4a591a6cbabccfc012"
+]
+
+
+tiempos_espera = {
+    "67372c56ec018d7dedd34ee3": 4800,  
+    "6737278e28aebf267e089bec": 7200,
+    "67372c39c499cd12be6bef9e": 4800,
+    "67372c61f269e28d2f86f063": 3600,
+    "6710c41ed814fc8dae914171": 20000,  
+    "67372c23ea45b856683249f4": 7200, 
+    "67372c1c7a5c6e90024299e1": 7200,  
+    "67372c44db061db993104ce1": 20000,  
+    "67372c4a591a6cbabccfc012": 2000
+}

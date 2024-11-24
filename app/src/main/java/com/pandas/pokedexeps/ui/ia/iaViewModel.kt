@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.State
 import androidx.lifecycle.ViewModel
 
-class IaViewModel : ViewModel() {
+class iaViewModel : ViewModel() {
 
     // Estado para manejar el texto de la respuesta
     private val _responseText = mutableStateOf("Escribe algo y presiona 'Enviar'")

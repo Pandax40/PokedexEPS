@@ -17,6 +17,7 @@ import com.pandas.pokedexeps.ui.capturezone.CaptureZoneScreen
 import com.pandas.pokedexeps.ui.components.PokemonCard
 import com.pandas.pokedexeps.ui.components.PokemonCardPreview
 import com.pandas.pokedexeps.ui.pokedex.PokedexScreen
+import com.pandas.pokedexeps.ui.pokedex.detail.PokemonDetailScreen
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,10 +27,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             PokedexEPSTheme {
                 val navController = rememberNavController()
-                PokedexScreen()
-                /*Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     NavGraph(navController = navController, modifier = Modifier.padding(innerPadding))
-                }*/
+                }
                 //PokemonCard(id = 1, name = "Bulbasaur", imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png")
             }
         }
@@ -42,11 +42,18 @@ fun NavGraph(navController: androidx.navigation.NavHostController, modifier: Mod
         composable("home_screen") {
             HomeScreen(navController = navController)
         }
-        composable("pokedex_screen"){
-            PokedexScreen()
+        composable("pokedex_screen") {
+            PokedexScreen(navController = navController)
         }
         composable("capture_zone_screen") {
             CaptureZoneScreen(navController = navController)
         }
+        composable("pokemon_detail_screen/{pokemonId}") {blackStackEntry ->
+            val pokemonId = blackStackEntry.arguments?.getString("pokemonId")?.toInt()
+            PokemonDetailScreen(pokemonId = pokemonId, navController = navController)
+        }
+        /*composable("team_screen") {
+            TeamScreen(navController = navController)
+        }*/
     }
 }
