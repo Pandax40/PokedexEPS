@@ -1,6 +1,5 @@
     package com.pandas.pokedexeps.ui.pokedex
 
-    import android.widget.Button
     import androidx.activity.compose.BackHandler
     import androidx.compose.foundation.layout.*
     import androidx.compose.foundation.layout.Arrangement
