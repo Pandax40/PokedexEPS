@@ -6,6 +6,6 @@ data class Team(
     val pveScore: Int,
     val pvpScore: Int,
     val pokedexScore: Int,
-    val capturedPokemons: List<String>,
+    val capturedPokemons: List<CapturedPokemon>,
     val isActive: Boolean
 )

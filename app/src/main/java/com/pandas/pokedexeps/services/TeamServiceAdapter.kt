@@ -2,6 +2,8 @@ package com.pandas.pokedexeps.services
 
 
 
+import com.pandas.pokedexeps.models.Ability
+import com.pandas.pokedexeps.models.CapturedPokemon
 import com.pandas.pokedexeps.models.Team
 import com.pandas.pokedexeps.models.TeamDTO
 
@@ -25,7 +27,7 @@ class TeamServiceAdapter : ITeamService {
         api = retrofit.create(TeamApi::class.java)
     }
 
-    override suspend fun getTeamById(teamId: String): Team = withContext(Dispatchers.IO) {
+    override suspend fun getTeam(): Team = withContext(Dispatchers.IO) {
         val hardcodedTeamId = "c588d253-e2b5-4e25-9b0c-1252f747e451"
         val teamDTO = api.getTeamById(hardcodedTeamId)
         mapTeamDTOToModel(teamDTO)
@@ -38,7 +40,12 @@ class TeamServiceAdapter : ITeamService {
             pveScore = dto.pve_score,
             pvpScore = dto.pvp_score,
             pokedexScore = dto.pokedex_score,
-            capturedPokemons = dto.captured_pokemons,
+            capturedPokemons = dto.captured_pokemons.map {
+                CapturedPokemon(
+                    id = it.id,
+                    pokemonId = it.pokemon_id
+                )
+            },
             isActive = dto.is_active
         )
     }

@@ -20,12 +20,14 @@ import androidx.navigation.compose.rememberNavController
 import com.pandas.pokedexeps.ui.theme.PokemonTypography
 import com.pandas.pokedexeps.ui.components.PokemonCard
 import com.pandas.pokedexeps.ui.home.HomeViewModel
-import PokedexViewModel
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
+import kotlin.text.contains
+import kotlin.toString
 
 @Composable
 fun PokedexScreen(viewModel: PokedexViewModel = androidx.lifecycle.viewmodel.compose.viewModel(), navController: NavController) {
     val pokemonList by viewModel.pokemonList
+    val pokemonOwnList by viewModel.pokemonOwnList
     val isLoading by viewModel.isLoading
 
     PokedexEPSTheme {
@@ -50,7 +52,12 @@ fun PokedexScreen(viewModel: PokedexViewModel = androidx.lifecycle.viewmodel.com
                             horizontalArrangement = Arrangement.Absolute.Left,
 
                             ) {
-                            rowPokemons.forEach { pokemon ->
+                            rowPokemons.forEach { pokemon -> val backgroundColor = if (pokemonOwnList.contains(pokemon.id.toString())) {
+                                    MaterialTheme.colorScheme.primary
+                                } else {
+                                    MaterialTheme.colorScheme.surface
+                                }
+
                                 PokemonCard(
                                     id = pokemon.id,
                                     name = pokemon.name,
@@ -58,6 +65,7 @@ fun PokedexScreen(viewModel: PokedexViewModel = androidx.lifecycle.viewmodel.com
                                     onClick = {
                                         navController.navigate("pokemon_detail_screen/${pokemon.id}")
                                     },
+
                                     modifier = Modifier.width(170.dp)
                                 )
                             }
