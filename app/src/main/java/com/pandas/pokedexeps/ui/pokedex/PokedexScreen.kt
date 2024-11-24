@@ -20,7 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import com.pandas.pokedexeps.ui.theme.PokemonTypography
 import com.pandas.pokedexeps.ui.components.PokemonCard
 import com.pandas.pokedexeps.ui.home.HomeViewModel
-import com.pandas.pokedexeps.ui.pokedex.PokedexViewModel
+import PokedexViewModel
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
 
 @Composable

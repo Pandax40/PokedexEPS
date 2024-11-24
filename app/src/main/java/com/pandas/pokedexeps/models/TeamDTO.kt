@@ -6,6 +6,6 @@ data class TeamDTO(
     val pve_score: Int,
     val pvp_score: Int,
     val pokedex_score: Int,
-    val captured_pokemons: List<String>, // List of captured Pokémon UUIDs
+    val captured_pokemons: List<CapturedPokemonDTO>, // List of captured Pokémon UUIDs
     val is_active: Boolean
 )
