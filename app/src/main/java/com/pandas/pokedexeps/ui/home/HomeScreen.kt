@@ -97,7 +97,7 @@ fun HomeScreen(
             ) {
                 Text(text = "Capture Zone")
             }
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = { viewModel.onCapturedZonesButtonClicked() },
                 modifier = Modifier.fillMaxWidth()
