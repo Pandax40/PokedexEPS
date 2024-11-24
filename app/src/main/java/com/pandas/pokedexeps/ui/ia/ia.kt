@@ -1,3 +1,4 @@
+/*
 package com.pandas.pokedexeps.ui.ia
 
 import androidx.compose.foundation.background
@@ -72,7 +73,10 @@ fun IaScreen(
 }
 
 @Preview(showBackground = true)
-@Composable
+@Composable*/
+/**//*
+
 fun IaScreenPreview() {
     IaScreen()
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.pandas.pokedexeps.ui.ia
 
 import android.os.Handler
@@ -28,3 +29,4 @@ class iaViewModel : ViewModel() {
         }, 2000)  // Retraso de 2 segundos (simulando tiempo de carga)
     }
 }
+*/
