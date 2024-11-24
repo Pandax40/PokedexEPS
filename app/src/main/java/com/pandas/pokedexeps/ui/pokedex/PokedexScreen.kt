@@ -38,7 +38,6 @@
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp)
-                    .padding(top = 32.dp, bottom = 32.dp),
             ) {
                 Text(
                     text = "Pokedex",
