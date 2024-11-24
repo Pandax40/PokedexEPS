@@ -19,6 +19,7 @@ import com.pandas.pokedexeps.ui.components.PokemonCardPreview
 import com.pandas.pokedexeps.ui.pokedex.PokedexScreen
 import com.pandas.pokedexeps.ui.pokedex.detail.PokemonDetailScreen
 import com.pandas.pokedexeps.ui.team.TeamScreen
+import com.pandas.pokedexeps.ui.teamgeneration.TeamGenerationScreen
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
 import com.pandas.pokedexeps.ui.zonasCapturadas.ZonasCapturadasScreen
 
@@ -60,6 +61,9 @@ fun NavGraph(navController: androidx.navigation.NavHostController, modifier: Mod
 
         composable("zona_capturada_screen") {
             ZonasCapturadasScreen(navController = navController)
+        }
+        composable("team_generation"){
+            TeamGenerationScreen(navController = navController)
         }
     }
 }

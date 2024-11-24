@@ -32,6 +32,7 @@ fun HomeScreen(
         val navigateToPokedexScreen by viewModel.navigateToPokedexScreen
         val navigateToTeamScreen by viewModel.navigateToTeamScreen
         val navigateToCapturedZones by viewModel.navigateToCapturedZones
+        val navigateToTeamGeneration by viewModel.navigateToTeamGeneration
 
         // Define un Animatable para el ángulo de rotación
         val rotationAngle = remember { Animatable(0f) }
@@ -61,6 +62,13 @@ fun HomeScreen(
             if (navigateToCapturedZones) {
                 navController.navigate("zona_capturada_screen")
                 viewModel.onNavigatedToCapturedZones()
+            }
+        }
+
+        LaunchedEffect(navigateToTeamGeneration) {
+            if (navigateToTeamGeneration) {
+                navController.navigate("team_generation")
+                viewModel.onNavigatedToTeamGeneration()
             }
         }
 
@@ -123,6 +131,13 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Captured Zones")
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = { viewModel.onTeamGenerationButtonClicked() },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Team Generation")
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.pandas.pokedexeps.ui.zonasCapturadas
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.State
 import androidx.lifecycle.ViewModel
@@ -21,8 +22,8 @@ class ZonasCapturadasViewModel : ViewModel() {
     val zonasCapturadasMap: State<Map<String, Int>> = _zonasCapturadasMap
 
     // Estado del pop-up
-    private val _showCooldownPopup = mutableStateOf(false)
-    val showCooldownPopup: State<Boolean> = _showCooldownPopup
+    var showCooldownPopup: MutableState<Boolean> = mutableStateOf(false)
+        private set
 
     // Job secundario para la automatización
     private var automationJob: Job? = null
@@ -64,14 +65,14 @@ class ZonasCapturadasViewModel : ViewModel() {
     private suspend fun checkAndCapture(zone: String) {
         withContext(Dispatchers.IO) {
             try {
-                val teamService = AdapterFactory.createTeamServiceAdapter()
+
                 val zoneService = AdapterFactory.createZoneServiceAdapter()
 
                 val zoneO = zoneService.getZoneById(zone)
-                val team = teamService.getTeam()
+
 
                 // Comprueba si el equipo está en la lista de espera
-                val isOnWaitingList = zoneO.lastRequestsByTeam.any { it.name == team.name }
+                val isOnWaitingList = zoneO.lastRequestsByTeam.any { it.name == "Panda Enjoyers" }
 
                 if (!isOnWaitingList) {
                     val eventService = AdapterFactory.createEventServiceAdapter()
@@ -90,17 +91,17 @@ class ZonasCapturadasViewModel : ViewModel() {
     fun attemptCapture(zoneId: String) {
         viewModelScope.launch {
             try {
-                val teamService = AdapterFactory.createTeamServiceAdapter()
+
                 val zoneService = AdapterFactory.createZoneServiceAdapter()
 
                 val zone = zoneService.getZoneById(zoneId)
-                val team = teamService.getTeam()
+
 
                 // Comprueba si el equipo está en la lista de espera
-                val isOnWaitingList = zone.lastRequestsByTeam.any { it.name == team.name }
+                val isOnWaitingList = zone.lastRequestsByTeam.any { it.name == "Panda Enjoyers" }
 
                 if (isOnWaitingList) {
-                    _showCooldownPopup.value = true // Activa el pop-up
+                    showCooldownPopup.value = true // Activa el pop-up
                 } else {
                     val eventService = AdapterFactory.createEventServiceAdapter()
                     eventService.generateEvent(zoneId)
@@ -114,7 +115,7 @@ class ZonasCapturadasViewModel : ViewModel() {
 
     // Oculta el pop-up
     fun dismissCooldownPopup() {
-        _showCooldownPopup.value = false
+        showCooldownPopup.value = false
     }
 
     // Carga las zonas capturadas al iniciar

@@ -114,14 +114,22 @@ fun ZonasCapturadasScreen(
         // Pop-up de cooldown
         if (showCooldownPopup) {
             AlertDialog(
-                onDismissRequest = { viewModel.dismissCooldownPopup() },
+                onDismissRequest = {
+                    viewModel.showCooldownPopup.value = false
+                },
                 confirmButton = {
-                    TextButton(onClick = { viewModel.dismissCooldownPopup() }) {
+                    TextButton(onClick = {
+                        viewModel.showCooldownPopup.value = false
+                    }) {
                         Text("OK")
                     }
                 },
-                title = { Text("Cooldown Activo") },
-                text = { Text("No puedes cazar Pokémon en esa área porque tienes un cooldown.") }
+                title = {
+                    Text("Cooldown Activo")
+                },
+                text = {
+                    Text("No puedes cazar Pokémon en esa área porque tienes un cooldown.")
+                }
             )
         }
     }
