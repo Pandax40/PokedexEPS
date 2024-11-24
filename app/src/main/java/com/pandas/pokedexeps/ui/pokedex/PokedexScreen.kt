@@ -3,26 +3,19 @@ package com.pandas.pokedexeps.ui.pokedex
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.pandas.pokedexeps.ui.theme.PokemonTypography
 import com.pandas.pokedexeps.ui.components.PokemonCard
-import com.pandas.pokedexeps.ui.home.HomeViewModel
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
-import kotlin.text.contains
-import kotlin.toString
 
 @Composable
 fun PokedexScreen(viewModel: PokedexViewModel = androidx.lifecycle.viewmodel.compose.viewModel(), navController: NavController) {
@@ -52,10 +45,10 @@ fun PokedexScreen(viewModel: PokedexViewModel = androidx.lifecycle.viewmodel.com
                             horizontalArrangement = Arrangement.Absolute.Left,
 
                             ) {
-                            rowPokemons.forEach { pokemon -> val backgroundColor = if (pokemonOwnList.contains(pokemon.id.toString())) {
-                                    MaterialTheme.colorScheme.primary
+                            rowPokemons.forEach { pokemon -> val had = if (pokemonOwnList.contains(pokemon.id.toString())) {
+                                    true
                                 } else {
-                                    MaterialTheme.colorScheme.surface
+                                    false
                                 }
 
                                 PokemonCard(
@@ -65,7 +58,7 @@ fun PokedexScreen(viewModel: PokedexViewModel = androidx.lifecycle.viewmodel.com
                                     onClick = {
                                         navController.navigate("pokemon_detail_screen/${pokemon.id}")
                                     },
-
+                                    had = had,
                                     modifier = Modifier.width(170.dp)
                                 )
                             }

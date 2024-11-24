@@ -1,6 +1,7 @@
 package com.pandas.pokedexeps.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.painterResource
@@ -29,12 +31,17 @@ fun PokemonCard( id: Int,
                  name: String,
                  imageUrl: String,
                  onClick: () -> Unit,
-                 backgroundColor: Color = MaterialTheme.colorScheme.primary,
+                 had: Boolean = false,
                  modifier: Modifier = Modifier) {
+    val backgroundColor = if (had) {
+        MaterialTheme.colorScheme.primary
+    } else {
+        MaterialTheme.colorScheme.surface
+    }
     Card(
         modifier = modifier.padding(6.dp),
         elevation = CardDefaults.cardElevation(4.dp),
-        onClick = onClick,
+        onClick = if (had) onClick else ({}),
         colors = CardDefaults.cardColors(containerColor = backgroundColor)
     ) {
         Column(
@@ -44,7 +51,7 @@ fun PokemonCard( id: Int,
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = name, style = MaterialTheme.typography.bodyLarge)
+                if(had) Text(text = name, style = MaterialTheme.typography.bodyLarge)
                 Text(text = "#${id.toString()}", style = MaterialTheme.typography.bodyMedium)
             }
             Row(
@@ -57,7 +64,8 @@ fun PokemonCard( id: Int,
                         .crossfade(true)
                         .build(),
                     contentDescription = "Translated description of what the image contains",
-                    modifier = Modifier.size(64.dp)
+                    modifier = Modifier.size(64.dp),
+                    colorFilter = if(!had) ColorFilter.tint(Color.Gray.copy(alpha = 0.5f)) else null
                 )
             }
         }
