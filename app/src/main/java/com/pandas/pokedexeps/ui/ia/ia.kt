@@ -1,4 +1,4 @@
-/*
+package com.pandas.pokedexeps.ui.ia/*
 package com.pandas.pokedexeps.ui.ia
 
 import androidx.compose.foundation.background

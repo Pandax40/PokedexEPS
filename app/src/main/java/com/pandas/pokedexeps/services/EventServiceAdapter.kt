@@ -23,8 +23,9 @@ class EventServiceAdapter : IEventService {
         api = retrofit.create(EventApi::class.java)
     }
 
-    override suspend fun generateEvent(zoneId: String, teamId: String): Event = withContext(Dispatchers.IO) {
-        val request = GenerateEventRequest(team_id = teamId)
+    override suspend fun generateEvent(zoneId: String): Event = withContext(Dispatchers.IO) {
+        val hardcodedTeamId = "c588d253-e2b5-4e25-9b0c-1252f747e451"
+        val request = GenerateEventRequest(team_id = hardcodedTeamId)
         val response = api.generateEvent(zoneId, request)
         mapEventResponseToModel(response)
     }

@@ -3,6 +3,9 @@ package com.pandas.pokedexeps.ui.capturezone
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.pandas.pokedexeps.adapter.AdapterFactory
+import kotlinx.coroutines.launch
 
 class CaptureZoneViewModel : ViewModel() {
     var qrCode: MutableState<String> = mutableStateOf("")
@@ -25,6 +28,33 @@ class CaptureZoneViewModel : ViewModel() {
 
     fun capturePokemon() {
         // Logic to capture Pokémon using the scanned QR code
+        val zone = qrCode.value.takeLast(24)
+
+        capturePokemon(zone)
+    }
+
+    private fun capturePokemon(zone: String) {
+        viewModelScope.launch {
+            // Logic to capture Pokémon using the scanned QR code
+
+            val teamService = AdapterFactory.createTeamServiceAdapter()
+
+            val zoneService = AdapterFactory.createZoneServiceAdapter();
+            val zoneO = zoneService.getZoneById(zone)
+            var encontrado = false;
+            zoneO.lastRequestsByTeam.forEach { teamId ->
+                val team = teamService.getTeamById(teamId)
+                if (team.name == "PandaEnjoyer") {
+                    encontrado = true
+                }
+            }
+
+            if(!encontrado) {
+                // Realiza las acciones necesarias si ningun equipo es "PandaEnjoyer"
+                val eventServie = AdapterFactory.createEventServiceAdapter();
+                eventServie.generateEvent(zone)
+            }
+        }
     }
 
     fun onBackButtonClicked() {
