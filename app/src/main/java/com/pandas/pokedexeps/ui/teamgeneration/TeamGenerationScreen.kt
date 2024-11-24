@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.pandas.pokedexeps.ui.components.PokemonCard
 import com.pandas.pokedexeps.ui.navigation.Home
+import com.pandas.pokedexeps.ui.navigation.PokedexDetail
 import com.pandas.pokedexeps.ui.theme.PokedexEPSTheme
 
 @Composable
@@ -54,7 +55,7 @@ fun TeamGenerationScreen(navController: NavController) {
                             name = pokemon.name,
                             imageUrl = pokemon.imageUrl,
                             onClick = {
-                                navController.navigate("pokemon_detail_screen/${pokemon.id}")
+                                navController.navigate(PokedexDetail(pokemon.id))
                             },
                             had = true,
                             modifier = Modifier.fillMaxWidth()
