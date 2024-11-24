@@ -27,8 +27,7 @@ fun PokedexScreen(viewModel: PokedexViewModel = androidx.lifecycle.viewmodel.com
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
-                .padding(top = 32.dp, bottom = 32.dp),
+                .padding(16.dp),
         ) {
             Text(
                 text = "Pokedex",
