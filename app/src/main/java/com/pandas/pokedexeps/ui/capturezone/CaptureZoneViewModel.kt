@@ -43,7 +43,7 @@ class CaptureZoneViewModel : ViewModel() {
             val zoneO = zoneService.getZoneById(zone)
             var encontrado = false;
             zoneO.lastRequestsByTeam.forEach { teamId ->
-                val team = teamService.getTeamById(teamId)
+                val team = teamService.getTeam()
                 if (team.name == "PandaEnjoyer") {
                     encontrado = true
                 }
