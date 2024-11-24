@@ -6,11 +6,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,7 +63,7 @@ fun ZonasCapturadasScreen(
             )
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Switch para activar/desactivar "Automatizar capturas"
+            // Switch de automatización
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -76,7 +78,7 @@ fun ZonasCapturadasScreen(
                 )
                 Switch(
                     checked = isAutomatizarOn,
-                    onCheckedChange = { viewModel.toggleAutomatizarCapturas(it) }, // Actualizamos el estado en el ViewModel
+                    onCheckedChange = { viewModel.toggleAutomatizarCapturas(it) },
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = MaterialTheme.colorScheme.primary,
                         uncheckedThumbColor = MaterialTheme.colorScheme.onBackground
@@ -86,7 +88,7 @@ fun ZonasCapturadasScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Lista de zonas visitadas con botón "Capturar"
+            // Lista de zonas visitadas
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.Start,
@@ -105,9 +107,9 @@ fun ZonasCapturadasScreen(
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onBackground
                         )
-                        // Mostrar el botón "Capturar" solo si el switch está en OFF
+                        // Botón "Capturar"
                         if (!isAutomatizarOn) {
-                            Button(onClick = { /* Acción futura para capturar */ }) {
+                            Button(onClick = { viewModel.attemptCapture(zonaKey.toString()) }) {
                                 Text(text = "Capturar")
                             }
                         }
@@ -115,8 +117,31 @@ fun ZonasCapturadasScreen(
                 }
             }
         }
+
+        // Pop-up de cooldown
+        if (showCooldownPopup) {
+            AlertDialog(
+                onDismissRequest = {
+                    viewModel.showCooldownPopup.value = false
+                },
+                confirmButton = {
+                    TextButton(onClick = {
+                        viewModel.showCooldownPopup.value = false
+                    }) {
+                        Text("OK")
+                    }
+                },
+                title = {
+                    Text("Cooldown Activo")
+                },
+                text = {
+                    Text("No puedes cazar Pokémon en esa área porque tienes un cooldown.")
+                }
+            )
+        }
     }
 }
+
 
 
 @Preview(showBackground = true)

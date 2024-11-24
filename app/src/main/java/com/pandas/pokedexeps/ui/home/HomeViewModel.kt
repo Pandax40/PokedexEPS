@@ -20,6 +20,8 @@ class HomeViewModel : ViewModel() {
     var navigateToCapturedZones: MutableState<Boolean> = mutableStateOf(false)
         private set
 
+    var navigateToTeamGeneration: MutableState<Boolean> = mutableStateOf(value = false)
+
     fun onCaptureZoneButtonClicked() {
         navigateToCaptureZoneScreen.value = true
     }
@@ -58,5 +60,14 @@ class HomeViewModel : ViewModel() {
 
     fun onNavigatedToCapturedZones() {
         navigateToTeamScreen.value = false
+    }
+
+
+    fun onTeamGenerationButtonClicked() {
+        navigateToTeamGeneration.value = true
+    }
+
+    fun onNavigatedToTeamGeneration() {
+        navigateToTeamGeneration.value = false
     }
 }
