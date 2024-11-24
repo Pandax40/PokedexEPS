@@ -25,11 +25,27 @@ fun HomeScreen(
 ) {
     PokedexEPSTheme {
         val navigateToCaptureZoneScreen by viewModel.navigateToCaptureZoneScreen
+        val navigateToPokedexScreen by viewModel.navigateToPokedexScreen
+        val navigateToTeamScreen by viewModel.navigateToTeamScreen
 
         LaunchedEffect(navigateToCaptureZoneScreen) {
             if (navigateToCaptureZoneScreen) {
                 navController.navigate("capture_zone_screen")
                 viewModel.onNavigatedToCaptureZoneScreen()
+            }
+        }
+
+        LaunchedEffect(navigateToPokedexScreen) {
+            if (navigateToPokedexScreen) {
+                navController.navigate("pokedex_screen")
+                viewModel.onNavigatedToPokedexScreen()
+            }
+        }
+
+        LaunchedEffect(navigateToTeamScreen) {
+            if (navigateToTeamScreen) {
+                navController.navigate("team_screen")
+                viewModel.onNavigatedToTeamScreen()
             }
         }
 
@@ -54,31 +70,24 @@ fun HomeScreen(
             )
             Spacer(modifier = Modifier.height(24.dp))
             Button(
-                onClick = { /* Navigate to Pokedex */ },
+                onClick = { viewModel.onPokedexButtonClicked() },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Pokedex")
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = { /* Navigate to Create Team */ },
+                onClick = { viewModel.onTeamButtonClicked() },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Team")
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = { /* Navigate to View Teams */ },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = "Ver Zonas")
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(
                 onClick = { viewModel.onCaptureZoneButtonClicked() },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "Capturar Zona")
+                Text(text = "Capture Zone")
             }
         }
     }

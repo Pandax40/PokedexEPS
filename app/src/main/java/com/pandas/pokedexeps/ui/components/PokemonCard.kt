@@ -25,10 +25,16 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 
 @Composable
-fun PokemonCard( id: Int, name: String, imageUrl: String, backgroundColor: Color = MaterialTheme.colorScheme.primary,modifier: Modifier = Modifier) {
+fun PokemonCard( id: Int,
+                 name: String,
+                 imageUrl: String,
+                 onClick: () -> Unit,
+                 backgroundColor: Color = MaterialTheme.colorScheme.primary,
+                 modifier: Modifier = Modifier) {
     Card(
         modifier = modifier.padding(6.dp),
         elevation = CardDefaults.cardElevation(4.dp),
+        onClick = onClick,
         colors = CardDefaults.cardColors(containerColor = backgroundColor)
     ) {
         Column(
@@ -61,5 +67,5 @@ fun PokemonCard( id: Int, name: String, imageUrl: String, backgroundColor: Color
 @Preview
 @Composable
 fun PokemonCardPreview() {
-    PokemonCard(id = 1, name = "Bulbasaur", imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png")
+    PokemonCard(id = 1, name = "Bulbasaur", onClick = {} , imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png")
 }
