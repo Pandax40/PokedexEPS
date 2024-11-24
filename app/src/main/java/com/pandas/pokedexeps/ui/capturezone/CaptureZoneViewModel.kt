@@ -45,8 +45,8 @@ class CaptureZoneViewModel : ViewModel() {
 
             // Obtenemos el equipo actual una vez
             val team = teamService.getTeam()
-            zoneO.lastRequestsByTeam.forEach { teamId ->
-                if (teamId == team.id && team.name == "PandaEnjoyer") {
+            zoneO.lastRequestsByTeam.forEach { teamName ->
+                if ( teamName.name == "PandaEnjoyer") {
                     encontrado = true
                 }
             }
